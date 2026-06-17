@@ -18,16 +18,16 @@
 
 ## E02. Source model, ranges і позиціонування
 
-- [ ] [ENC-006](tasks/ENC-006-source-buffer.md) — реалізувати `SourceBuffer` і правила володіння raw bytes.
-- [ ] [ENC-007](tasks/ENC-007-range-bias-semantics.md) — реалізувати half-open ranges, validation і `OffsetBias`.
-- [ ] [ENC-008](tasks/ENC-008-offset-map-core.md) — реалізувати segment-based `OffsetMap`.
-- [ ] [ENC-009](tasks/ENC-009-offset-map-builders.md) — реалізувати exact mapping builders для підтримуваних encoding families.
-- [ ] [ENC-010](tasks/ENC-010-line-index.md) — реалізувати `LineIndex` без нормалізації line endings.
-- [ ] [ENC-011](tasks/ENC-011-string-input-model.md) — реалізувати already-decoded string input і synthetic byte behavior.
+- [x] [ENC-006](tasks/ENC-006-source-buffer.md) — реалізувати `SourceBuffer` і правила володіння raw bytes. Виконано: додано immutable `SourceBuffer` runtime helper для `Uint8Array`, `ArrayBuffer` і зібраних chunks; публічні читання та `slice()` повертають копії, а focused tests перевіряють ownership, BOM/invalid bytes і range validation.
+- [x] [ENC-007](tasks/ENC-007-range-bias-semantics.md) — реалізувати half-open ranges, validation і `OffsetBias`. Виконано: додано спільні immutable helpers для `SourceByteRange`, `TextRange`, `OffsetBias` і biased offset projection; `SourceBuffer.slice()` переведено на спільну range validation; focused tests покривають collapsed BOM ranges, segment boundary bias і out-of-bounds offsets.
+- [x] [ENC-008](tasks/ENC-008-offset-map-core.md) — реалізувати segment-based `OffsetMap`. Виконано: додано immutable `OffsetMap` runtime helper із segment validation, точним `identity` mapping, bias-based projection для non-identity segments, stable frozen `segments()` і focused tests для BOM, replacement, synthetic та validation сценаріїв.
+- [x] [ENC-009](tasks/ENC-009-offset-map-builders.md) — реалізувати exact mapping builders для підтримуваних encoding families. Виконано: додано exact builder-и для canonical UTF-8, UTF-16LE/BE і single-byte encodings; BOM формує `bom` segments, invalid sequences у fatal policy повертають failure без partial map, а replace policy створює `replacement` segments і warnings.
+- [x] [ENC-010](tasks/ENC-010-line-index.md) — реалізувати `LineIndex` без нормалізації line endings. Виконано: додано immutable `LineIndex` для decoded text + `OffsetMap`, підтримку LF/CRLF/CR без зміни тексту, 1-based line/column positions, `lineByteRange` через original source map і focused tests для empty, trailing newline, mixed endings та UTF-8 byte positions.
+- [x] [ENC-011](tasks/ENC-011-string-input-model.md) — реалізувати already-decoded string input і synthetic byte behavior. Виконано: додано synthetic UTF-8 builder для string input, `createDecodedStringDocument` з `detection.source: "explicit"`, metadata explicit/default encoding, `synthetic` offset segments, warning `ENCODING_TEXT_INPUT_SYNTHETIC_BYTES` для exact source map і focused tests.
 
 ## E03. Profiles, labels, options і metadata
 
-- [ ] [ENC-012](tasks/ENC-012-encoding-registry-labels.md) — реалізувати canonical encoding registry і label normalization.
+- [x] [ENC-012](tasks/ENC-012-encoding-registry-labels.md) — реалізувати canonical encoding registry і label normalization. Виконано: додано canonical v1 registry, aliases для common labels, `normalizeEncodingLabel`/`tryNormalizeEncodingLabel`, immutable alias lookup, webCompat WHATWG remapping `iso-8859-1`/`latin1` до `windows-1252` і підключення string input до спільного normalizer.
 - [ ] [ENC-013](tasks/ENC-013-options-normalization.md) — реалізувати нормалізацію та валідацію decode/detect options.
 - [ ] [ENC-014](tasks/ENC-014-built-in-profiles.md) — реалізувати `strictUtf8`, `rmem`, `legacyCyrillic` і `webCompat` профілі.
 - [ ] [ENC-015](tasks/ENC-015-metadata-sniffing.md) — реалізувати metadata extraction і правила участі metadata у detection.
