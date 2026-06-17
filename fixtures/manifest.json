@@ -1,0 +1,51 @@
+{
+  "$schema": "./schema.json",
+  "fixtures": [
+    {
+      "id": "infrastructure-invalid-utf8",
+      "description": "Small invalid UTF-8 payload used to verify byte-safe fixture loading.",
+      "bytesHex": "61 c3 28 62",
+      "tags": ["infrastructure", "invalid-sequence"],
+      "expected": {
+        "text": "a�(b",
+        "detection": {
+          "encoding": "utf-8",
+          "confidence": 1,
+          "bomLength": 0,
+          "warnings": ["ENCODING_INVALID_SEQUENCE_REPLACED"]
+        },
+        "lineIndex": {
+          "lineCount": 1,
+          "lines": [
+            {
+              "line": 1,
+              "textRange": {
+                "start": 0,
+                "end": 4
+              },
+              "byteRange": {
+                "start": 0,
+                "end": 4
+              }
+            }
+          ]
+        },
+        "offsetMap": {
+          "ranges": [
+            {
+              "label": "invalid-sequence",
+              "textRange": {
+                "start": 1,
+                "end": 2
+              },
+              "byteRange": {
+                "start": 1,
+                "end": 2
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
