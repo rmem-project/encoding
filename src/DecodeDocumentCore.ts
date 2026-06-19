@@ -3,28 +3,29 @@ import type {
   DecoderBackend,
   DecoderBackendInfo,
 } from "./contracts/backend.js";
-import type { EncodingDetectionResult, NormalizedEncodingLabel } from "./contracts/detection.js";
-import { createEncodingError, mergeEncodingWarnings } from "./contracts/diagnostics.js";
-import type { EncodingWarning } from "./contracts/diagnostics.js";
+import { createEncodingError } from "./contracts/diagnostics.js";
 import type { DecodeDocumentOptions } from "./contracts/encoding.js";
+import type { EncodingDetectionResult } from "./contracts/detection.js";
 import type { DecodedDocument } from "./contracts/document.js";
-import type { OffsetMap, OffsetMapSegment, SourceBuffer } from "./contracts/source.js";
+import type { OffsetMap, OffsetMapSegment } from "./contracts/source.js";
 import {
   NATIVE_UNICODE_BACKEND,
   createDecoderRegistry,
   createTextDecoderBackend,
   isTextDecoderBackendAvailable,
 } from "./decoder/index.js";
+import type { DecoderBackendSelection } from "./decoder/index.js";
 import { detectCompositeEncoding } from "./detector/CompositeDetector.js";
 import type { NormalizedDecodeDocumentOptions } from "./encoding/OptionsNormalization.js";
-import { createDecodedStringDocument, createLineIndex, createOffsetMap } from "./source/index.js";
+import { createDecodedDocument } from "./source/DecodedDocument.js";
+import { createDecodedStringDocument, createOffsetMap } from "./source/index.js";
 import type {
   NormalizedByteInput,
   NormalizedEncodingInput,
   NormalizedStringInput,
 } from "./source/index.js";
 
-const DEFAULT_DECODER_REGISTRY = createDecoderRegistry(createDefaultDecoderBackends());
+export const DEFAULT_DECODER_REGISTRY = createDecoderRegistry(createDefaultDecoderBackends());
 
 export function decodeNormalizedDocument(
   input: NormalizedEncodingInput,
@@ -58,12 +59,7 @@ function decodeByteInput(
   const source = input.source;
   const bytes = source.bytes;
   const detection = detectCompositeEncoding(bytes, originalOptions);
-  const backendSelection = DEFAULT_DECODER_REGISTRY.selectDecoderBackend({
-    encoding: detection.encoding,
-    profile: options.profile,
-    sourceMap: options.sourceMap,
-    backendPreference: options.backendPreference,
-  });
+  const backendSelection = selectDocumentDecoderBackend(detection, options);
   const backendResult = backendSelection.backend.decode(bytes, {
     encoding: detection.encoding,
     stripBom: options.stripBom,
@@ -82,17 +78,29 @@ function decodeByteInput(
   return createDecodedDocument({
     text: backendResult.text,
     source,
-    detection: attachSelectedBackend(detection, backendSelection.info),
+    detection,
+    backend: backendSelection.info,
     offsetMap,
-    warnings: mergeEncodingWarnings(
-      detection.warnings,
-      backendSelection.warnings,
-      backendResult.warnings,
-    ),
+    warnings: {
+      backend: backendSelection.warnings,
+      sourceMap: backendResult.warnings,
+    },
   });
 }
 
-function resolveDocumentOffsetMap(options: {
+export function selectDocumentDecoderBackend(
+  detection: EncodingDetectionResult,
+  options: NormalizedDecodeDocumentOptions,
+): DecoderBackendSelection {
+  return DEFAULT_DECODER_REGISTRY.selectDecoderBackend({
+    encoding: detection.encoding,
+    profile: options.profile,
+    sourceMap: options.sourceMap,
+    backendPreference: options.backendPreference,
+  });
+}
+
+export function resolveDocumentOffsetMap(options: {
   readonly backendResult: BackendDecodeResult;
   readonly backendInfo: DecoderBackendInfo;
   readonly sourceMap: NormalizedDecodeDocumentOptions["sourceMap"];
@@ -104,7 +112,6 @@ function resolveDocumentOffsetMap(options: {
     offsetMapFromSegments(options.backendResult.offsetMapSegments);
 
   if (offsetMap !== undefined) {
-    assertOffsetMapCoversDocument(offsetMap, options);
     return offsetMap;
   }
 
@@ -130,38 +137,6 @@ function offsetMapFromSegments(
   return segments === undefined ? undefined : createOffsetMap(segments);
 }
 
-function assertOffsetMapCoversDocument(
-  offsetMap: OffsetMap,
-  options: {
-    readonly backendInfo: DecoderBackendInfo;
-    readonly sourceMap: NormalizedDecodeDocumentOptions["sourceMap"];
-    readonly byteLength: number;
-    readonly textLength: number;
-  },
-): void {
-  const segments = offsetMap.segments();
-  const lastSegment = segments.at(-1);
-  const mappedByteLength = lastSegment?.byteRange.end ?? 0;
-  const mappedTextLength = lastSegment?.textRange.end ?? 0;
-
-  if (mappedByteLength === options.byteLength && mappedTextLength === options.textLength) {
-    return;
-  }
-
-  throw createEncodingError({
-    code: "ENCODING_SOURCE_MAP_UNAVAILABLE",
-    message: "Decoder backend produced a source map that does not cover the decoded document.",
-    details: {
-      backend: options.backendInfo.name,
-      sourceMap: options.sourceMap,
-      byteLength: options.byteLength,
-      textLength: options.textLength,
-      mappedByteLength,
-      mappedTextLength,
-    },
-  });
-}
-
 function createSourceMapDisabledOffsetMap(byteLength: number, textLength: number): OffsetMap {
   if (byteLength === 0 && textLength === 0) {
     return createOffsetMap([]);
@@ -180,62 +155,6 @@ function createSourceMapDisabledOffsetMap(byteLength: number, textLength: number
       kind: "encoded",
     },
   ]);
-}
-
-function createDecodedDocument(parts: {
-  readonly text: string;
-  readonly source: SourceBuffer;
-  readonly detection: EncodingDetectionResult;
-  readonly offsetMap: OffsetMap;
-  readonly warnings: readonly EncodingWarning[];
-}): DecodedDocument {
-  const warnings = mergeEncodingWarnings(parts.warnings);
-  const lineIndex = createLineIndex(parts.text, parts.offsetMap);
-
-  return Object.freeze({
-    text: parts.text,
-    get bytes(): Uint8Array {
-      return parts.source.bytes;
-    },
-    detection: parts.detection,
-    lineIndex,
-    offsetMap: parts.offsetMap,
-    warnings,
-    source: parts.source,
-  });
-}
-
-function attachSelectedBackend(
-  detection: EncodingDetectionResult,
-  backendInfo: DecoderBackendInfo,
-): EncodingDetectionResult {
-  return Object.freeze({
-    encoding: detection.encoding,
-    confidence: detection.confidence,
-    source: detection.source,
-    bomLength: detection.bomLength,
-    candidates: Object.freeze([...detection.candidates]),
-    warnings: mergeEncodingWarnings(detection.warnings),
-    label: freezeNormalizedEncodingLabel(detection.label),
-    backend: freezeDecoderBackendInfo(backendInfo),
-  });
-}
-
-function freezeNormalizedEncodingLabel(label: NormalizedEncodingLabel): NormalizedEncodingLabel {
-  return Object.freeze({
-    ...optionalProperty("inputLabel", label.inputLabel),
-    canonical: label.canonical,
-    aliases: Object.freeze([...label.aliases]),
-    source: label.source,
-  });
-}
-
-function freezeDecoderBackendInfo(info: DecoderBackendInfo): DecoderBackendInfo {
-  return Object.freeze({
-    name: info.name,
-    ...optionalProperty("version", info.version),
-    exactSourceMap: info.exactSourceMap,
-  });
 }
 
 function createDefaultDecoderBackends(): readonly DecoderBackend[] {

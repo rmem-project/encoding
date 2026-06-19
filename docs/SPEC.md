@@ -557,6 +557,14 @@ export interface EncodingProfile {
 
 `utf-16le` і `utf-16be` мають іти через transcode compatibility mode.
 
+Parser integration contract: `@rmem/md-parser` має приймати public `DecodedDocument`
+як runtime-документ і обирати режим за `decoded.detection.encoding` та public
+`EncodingProfile.nativeByteSafeEncodings`. Якщо вибране кодування входить у
+`nativeByteSafeEncodings`, parser може використовувати native byte-safe mode;
+інакше він має переходити на transcode compatibility mode і мапити ranges через
+`DecodedDocument.offsetMap`. Parser не має імпортувати internal detector,
+decoder, source model або profile policy classes.
+
 ## 17. Приклад інтеграції
 
 ```ts

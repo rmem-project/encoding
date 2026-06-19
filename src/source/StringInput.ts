@@ -19,7 +19,7 @@ import type {
 import type { EncodingProfile } from "../contracts/profile.js";
 import { createEncodingCandidate } from "../detector/ConfidencePolicy.js";
 import { normalizeEncodingLabel } from "../encoding/EncodingRegistry.js";
-import { createLineIndex } from "./LineIndex.js";
+import { createDecodedDocument } from "./DecodedDocument.js";
 import { buildSyntheticUtf8StringOffsetMap } from "./OffsetMapBuilder.js";
 import { createSourceBuffer } from "./SourceBuffer.js";
 
@@ -61,10 +61,11 @@ export function createDecodedStringDocument(
   return createDecodedDocument({
     text: input,
     detection,
-    lineIndex: createLineIndex(input, offsetMapBuild.offsetMap),
     offsetMap: offsetMapBuild.offsetMap,
-    warnings,
     source,
+    warnings: {
+      sourceMap: warnings,
+    },
   });
 }
 
@@ -166,20 +167,6 @@ function createStringInputCandidate(
         ? "Already-decoded string input used the explicit encoding label without detection heuristics."
         : "Already-decoded string input used the default encoding label without detection heuristics.",
     bomLength: 0,
-  });
-}
-
-function createDecodedDocument(parts: Omit<DecodedDocument, "bytes">): DecodedDocument {
-  return Object.freeze({
-    text: parts.text,
-    get bytes(): Uint8Array {
-      return parts.source.bytes;
-    },
-    detection: parts.detection,
-    lineIndex: parts.lineIndex,
-    offsetMap: parts.offsetMap,
-    warnings: parts.warnings,
-    source: parts.source,
   });
 }
 

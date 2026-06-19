@@ -60,20 +60,20 @@
 - [x] [ENC-029](tasks/ENC-029-input-normalization.md) — реалізувати input normalization для bytes, buffers, iterables і streams. Виконано: додано sync/async нормалізатор для `string`, `Uint8Array`, `ArrayBuffer`, sync/async iterables і `ReadableStream`; byte-input зберігає immutable `SourceBuffer`, chunk boundaries, bounded samples без декодування, defensive copies і runtime validation для async-only sync input, invalid chunks та chunkless iterables.
 - [x] [ENC-030](tasks/ENC-030-sync-decode-pipeline.md) — реалізувати `decodeDocumentSync`. Виконано: додано sync high-level pipeline для string/bytes/ArrayBuffer/iterable inputs, normalizer-driven options, detection, backend selection, controlled decode, `OffsetMap`/`LineIndex` assembly, stable warnings merge і focused tests для fatal станів та `sourceMap` режимів.
 - [x] [ENC-031](tasks/ENC-031-async-decode-pipeline.md) — реалізувати `decodeDocument`. Виконано: додано асинхронний high-level API поверх спільного decode core, підтримано `AsyncIterable` і `ReadableStream` inputs через існуючу нормалізацію, збережено parity із sync result для тих самих bytes і покрито stream read error propagation.
-- [ ] [ENC-032](tasks/ENC-032-try-decode-result.md) — реалізувати `tryDecodeDocument`.
-- [ ] [ENC-033](tasks/ENC-033-decoded-document-assembly.md) — складати immutable `DecodedDocument`.
-- [ ] [ENC-034](tasks/ENC-034-parser-integration-metadata.md) — expose metadata для режимів інтеграції parser.
+- [x] [ENC-032](tasks/ENC-032-try-decode-result.md) — реалізувати `tryDecodeDocument`. Виконано: додано async no-throw API, який повертає `EncodingResult<DecodedDocument>` для successful decode і fatal `EncodingError`, не маскує не-encoding failures з input boundaries та покритий focused tests; `check` проходить.
+- [x] [ENC-033](tasks/ENC-033-decoded-document-assembly.md) — складати immutable `DecodedDocument`. Виконано: додано централізований assembler `DecodedDocument`, який нормалізує source map, будує `LineIndex`, підставляє selected backend, стабілізує порядок warnings, прибирає точні дублікати та перевіряє покриття `bytes`/`text` перед поверненням документа.
+- [x] [ENC-034](tasks/ENC-034-parser-integration-metadata.md) — expose metadata для режимів інтеграції parser. Виконано: зафіксовано public profile metadata shape, підтверджено native byte-safe набір для UTF-8 і ASCII-compatible single-byte encodings, UTF-16 transcode path та приклад вибору parser mode через `DecodedDocument.detection` без internal imports.
 
 ## E07. Stream API
 
-- [ ] [ENC-035](tasks/ENC-035-detection-sampler.md) — реалізувати stream detection sampler.
-- [ ] [ENC-036](tasks/ENC-036-decoding-stream-write.md) — реалізувати `DecodingStream.write`.
-- [ ] [ENC-037](tasks/ENC-037-stream-pending-state.md) — обробляти pending multibyte state і stream finalization errors.
-- [ ] [ENC-038](tasks/ENC-038-stream-end-document.md) — реалізувати `DecodingStream.end` і повний stream `DecodedDocument`.
+- [x] [ENC-035](tasks/ENC-035-detection-sampler.md) — реалізувати stream detection sampler. Виконано: додано `DetectionSampler`, який буферизує chunks без decoding, будує bounded sample за `sampleSizeBytes`, чекає split BOM перед раннім explicit/metadata рішенням, фіксує BOM/detection детерміновано і повертає defensive snapshots для подальшого stream decoding.
+- [x] [ENC-036](tasks/ENC-036-decoding-stream-write.md) — реалізувати `DecodingStream.write`. Виконано: додано `createDecodingStream`, incremental `write` після detection, перший buffered flush без раннього декодування split BOM, stable accumulated char offsets, chunk-local `OffsetMap` і stream-global warning ranges; `check` проходить.
+- [x] [ENC-037](tasks/ENC-037-stream-pending-state.md) — обробляти pending multibyte state і stream finalization errors. Виконано: додано stream-local pending bytes для UTF-8 і UTF-16, коректне декодування split sequences між chunks, fatal `ENCODING_INCOMPLETE_STREAM_SEQUENCE` на незавершеному `end()` і replace-фіналізацію з warning та replacement segment.
+- [x] [ENC-038](tasks/ENC-038-stream-end-document.md) — реалізувати `DecodingStream.end` і повний stream `DecodedDocument`. Виконано: `end()` фіналізує detection нижче sample limit, збирає immutable `DecodedDocument` із повним source/offset map/line index/warnings, зберігає parity з `decodeDocumentSync`, коректно рахує split CRLF і забороняє `write` після завершення.
 
 ## E08. Fixtures, тестове покриття, документація і release readiness
 
-- [ ] [ENC-039](tasks/ENC-039-minimal-fixture-corpus.md) — створити мінімальний fixture corpus зі специфікації.
+- [x] [ENC-039](tasks/ENC-039-minimal-fixture-corpus.md) — створити мінімальний fixture corpus зі специфікації. Виконано: додано byte fixtures зі SPEC, очікування decoded text/detection/confidence/BOM/warnings/LineIndex/key offset ranges і сценарні tags для майбутніх behavior tests.
 - [ ] [ENC-040](tasks/ENC-040-detection-profile-tests.md) — покрити detection і profiles поведінковими тестами.
 - [ ] [ENC-041](tasks/ENC-041-source-map-line-tests.md) — покрити `OffsetMap` і `LineIndex` тестами.
 - [ ] [ENC-042](tasks/ENC-042-decoder-policy-error-tests.md) — покрити decoder policies, warnings і errors тестами.

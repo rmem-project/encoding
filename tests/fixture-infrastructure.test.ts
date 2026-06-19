@@ -15,6 +15,22 @@ describe("fixture infrastructure", () => {
   it("exposes stable fixture ids from the manifest", async () => {
     const manifest = await readFixtureManifest();
 
-    expect(fixtureIds(manifest)).toEqual(["infrastructure-invalid-utf8"]);
+    expect(fixtureIds(manifest)).toEqual([
+      "infrastructure-invalid-utf8",
+      "utf8-no-bom",
+      "utf8-bom",
+      "utf8-invalid-sequence",
+      "utf16le-bom",
+      "utf16be-bom",
+      "windows1251-uk",
+      "windows1252-latin",
+      "koi8r-cyrillic",
+      "cp866-cyrillic",
+      "iso8859-5-cyrillic",
+      "ambiguous-ascii",
+      "html-meta-windows1251",
+      "stream-split-utf8",
+      "stream-split-crlf",
+    ]);
   });
 });
