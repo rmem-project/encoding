@@ -74,8 +74,8 @@
 ## E08. Fixtures, тестове покриття, документація і release readiness
 
 - [x] [ENC-039](tasks/ENC-039-minimal-fixture-corpus.md) — створити мінімальний fixture corpus зі специфікації. Виконано: додано byte fixtures зі SPEC, очікування decoded text/detection/confidence/BOM/warnings/LineIndex/key offset ranges і сценарні tags для майбутніх behavior tests.
-- [ ] [ENC-040](tasks/ENC-040-detection-profile-tests.md) — покрити detection і profiles поведінковими тестами.
-- [ ] [ENC-041](tasks/ENC-041-source-map-line-tests.md) — покрити `OffsetMap` і `LineIndex` тестами.
+- [x] [ENC-040](tasks/ENC-040-detection-profile-tests.md) — покрити detection і profiles поведінковими тестами. Виконано: додано behavior-level suite через public `detectEncoding`, який перевіряє priority explicit/BOM/metadata/fallback, профілі `strictUtf8`, `rmem`, `legacyCyrillic`, `webCompat`, candidate order, confidence category, ambiguous warnings, unsupported labels і option conflicts.
+- [x] [ENC-041](tasks/ENC-041-source-map-line-tests.md) — покрити `OffsetMap` і `LineIndex` тестами. Виконано: додано behavior-level suite для fixture key ranges, двостороннього byte/text mapping, `LineIndex`, collapsed BOM boundary bias, replacement і synthetic segments, mixed line endings та UTF-8 bias позиціонування.
 - [ ] [ENC-042](tasks/ENC-042-decoder-policy-error-tests.md) — покрити decoder policies, warnings і errors тестами.
 - [ ] [ENC-043](tasks/ENC-043-stream-input-tests.md) — покрити stream та async input сценарії.
 - [ ] [ENC-044](tasks/ENC-044-public-docs-examples.md) — підготувати public usage docs і integration examples.
