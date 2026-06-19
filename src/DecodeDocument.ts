@@ -1,15 +1,15 @@
-import type { DecodeDocumentOptions, SyncEncodingInput } from "./contracts/encoding.js";
+import type { DecodeDocumentOptions, EncodingInput } from "./contracts/encoding.js";
 import type { DecodedDocument } from "./contracts/document.js";
 import { decodeNormalizedDocument } from "./DecodeDocumentCore.js";
 import { normalizeDecodeDocumentOptions } from "./encoding/OptionsNormalization.js";
-import { normalizeEncodingInputSync } from "./source/index.js";
+import { normalizeEncodingInput } from "./source/index.js";
 
-export function decodeDocumentSync(
-  input: SyncEncodingInput,
+export async function decodeDocument(
+  input: EncodingInput,
   options?: DecodeDocumentOptions,
-): DecodedDocument {
+): Promise<DecodedDocument> {
   const normalizedOptions = normalizeDecodeDocumentOptions(options);
-  const normalizedInput = normalizeEncodingInputSync(input);
+  const normalizedInput = await normalizeEncodingInput(input);
 
   return decodeNormalizedDocument(normalizedInput, normalizedOptions, options);
 }

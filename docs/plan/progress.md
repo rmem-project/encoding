@@ -55,7 +55,7 @@
 
 - [x] [ENC-029](tasks/ENC-029-input-normalization.md) — реалізувати input normalization для bytes, buffers, iterables і streams. Виконано: додано sync/async нормалізатор для `string`, `Uint8Array`, `ArrayBuffer`, sync/async iterables і `ReadableStream`; byte-input зберігає immutable `SourceBuffer`, chunk boundaries, bounded samples без декодування, defensive copies і runtime validation для async-only sync input, invalid chunks та chunkless iterables.
 - [x] [ENC-030](tasks/ENC-030-sync-decode-pipeline.md) — реалізувати `decodeDocumentSync`. Виконано: додано sync high-level pipeline для string/bytes/ArrayBuffer/iterable inputs, normalizer-driven options, detection, backend selection, controlled decode, `OffsetMap`/`LineIndex` assembly, stable warnings merge і focused tests для fatal станів та `sourceMap` режимів.
-- [ ] [ENC-031](tasks/ENC-031-async-decode-pipeline.md) — реалізувати `decodeDocument`.
+- [x] [ENC-031](tasks/ENC-031-async-decode-pipeline.md) — реалізувати `decodeDocument`. Виконано: додано асинхронний high-level API поверх спільного decode core, підтримано `AsyncIterable` і `ReadableStream` inputs через існуючу нормалізацію, збережено parity із sync result для тих самих bytes і покрито stream read error propagation.
 - [ ] [ENC-032](tasks/ENC-032-try-decode-result.md) — реалізувати `tryDecodeDocument`.
 - [ ] [ENC-033](tasks/ENC-033-decoded-document-assembly.md) — складати immutable `DecodedDocument`.
 - [ ] [ENC-034](tasks/ENC-034-parser-integration-metadata.md) — expose metadata для режимів інтеграції parser.

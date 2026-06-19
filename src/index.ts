@@ -1,4 +1,5 @@
 export * from "./contracts/index.js";
+export { decodeDocument } from "./DecodeDocument.js";
 export { decodeDocumentSync } from "./DecodeDocumentSync.js";
 export { detectEncoding } from "./DetectEncoding.js";
 export * from "./decoder/index.js";
