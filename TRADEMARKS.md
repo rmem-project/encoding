@@ -2,6 +2,15 @@
 
 This trademark policy applies to the names, marks, and project identity associated with the RelicMEM project and the `@relicmem/encoding` package.
 
+## Owner and status
+
+For repository policy purposes, the project marks are controlled by the RelicMEM project maintainers
+or by their other respective owners. This policy does not assert that any mark is registered unless
+a future official RelicMEM document explicitly identifies that registered status.
+
+The absence of a registration statement does not grant permission to use the marks in a confusing,
+misleading, or endorsement-implying way.
+
 ## Project marks
 
 The following are project marks:
@@ -84,7 +93,9 @@ Avoid names that create confusion with the official package.
 
 You may truthfully state that your project is compatible with RelicMEM or `@relicmem/encoding`.
 
-Compatibility claims must not imply certification, endorsement, or official partnership unless such relationship has been explicitly approved.
+Compatibility claims must be accurate, limited to the versions or APIs actually tested, and must not
+imply certification, endorsement, or official partnership unless such relationship has been
+explicitly approved.
 
 Acceptable examples:
 
@@ -106,7 +117,11 @@ Approved by RelicMEM
 
 Do not use RelicMEM logos, icons, or visual marks as part of your own product identity without permission.
 
-You may use screenshots or small references in documentation, tutorials, or reviews when the use is accurate, non-misleading, and clearly refers to the original project.
+You may use screenshots or small references in documentation, tutorials, or reviews when the use is
+accurate, non-misleading, and clearly refers to the original project.
+
+Do not modify, recolor, combine, animate, or package RelicMEM logos, icons, or visual marks as your
+own branding without explicit permission.
 
 ## No endorsement
 
@@ -114,4 +129,10 @@ Use of the RelicMEM name or `@relicmem/encoding` name does not imply endorsement
 
 ## Contact
 
-For trademark permission requests, open an issue in the appropriate official RelicMEM repository and clearly describe the intended use.
+Trademark permission requests should use a private maintainer contact published by the official
+RelicMEM project. Do not open a public issue containing confidential launch plans, unreleased
+branding, legal questions, or permission requests that require private review.
+
+If no private maintainer contact is published, permission has not been granted. Use only the allowed
+descriptive and compatibility references above, or wait until the project publishes an appropriate
+private contact process.

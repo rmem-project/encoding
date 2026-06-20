@@ -2,32 +2,39 @@
 
 ## Supported versions
 
-`@relicmem/encoding` is in active development.
+`@relicmem/encoding` is in active development. Before `1.0.0`, supported versions are intentionally
+narrow because breaking fixes may be needed while the API is still stabilizing.
 
-Security fixes are generally provided for:
+Security fixes are targeted for:
 
-| Version                  | Supported   |
-| ------------------------ | ----------- |
-| Latest published release | Yes         |
-| `main` branch            | Yes         |
-| Older pre-1.0 releases   | Best effort |
-| Deprecated releases      | No          |
+| Version                  | Supported                                     |
+| ------------------------ | --------------------------------------------- |
+| Latest published release | Yes                                           |
+| `main` branch            | Yes                                           |
+| Older pre-1.0 releases   | Critical fixes only, at maintainer discretion |
+| Deprecated releases      | No                                            |
 
-Before `1.0.0`, the project may introduce breaking changes while the API is still being stabilized.
+For pre-1.0 npm releases, "latest published release" means the newest `0.x` version available on
+the official npm package. Older `0.x` versions should upgrade to the latest release unless a
+maintainer explicitly publishes a backport.
 
-After `1.0.0`, this policy may be updated with a more explicit version support window.
+After `1.0.0`, this policy may be updated with an explicit supported-version window.
 
 ## Reporting a vulnerability
 
 Please do not report security vulnerabilities through public GitHub issues, public discussions, or social media.
 
-Preferred reporting method:
+Supported private reporting method:
 
 1. Open the repository on GitHub.
 2. Go to the **Security** tab.
 3. Use **Report a vulnerability** if private vulnerability reporting is enabled.
 
-If private vulnerability reporting is not available yet, please open a minimal public issue asking for the preferred private security contact. Do not include exploit details, proof-of-concept code, crash inputs, or sensitive information in the public issue.
+GitHub private vulnerability reporting is the supported security intake channel for this repository.
+Maintainers should keep it enabled before accepting public releases. If the button is missing, do
+not open a public issue with a placeholder request or vulnerability details. Use only a private
+maintainer contact already published by the official project, or wait until private vulnerability
+reporting is enabled.
 
 ## What to include
 
@@ -68,25 +75,35 @@ If you are unsure whether something is security-sensitive, report it privately.
 
 ## Response expectations
 
-The maintainers will make a best effort to:
+This is a small open-source project, so these are response targets rather than guaranteed service
+levels. Maintainers will make a best effort to:
 
-- acknowledge valid private reports;
-- investigate the issue;
+- acknowledge a private report within 7 calendar days;
+- provide an initial triage result or status update within 14 calendar days;
+- send an update at least every 14 calendar days while the report remains open;
+- investigate the issue and identify affected versions;
 - avoid unnecessary public disclosure before a fix is available;
 - credit the reporter when appropriate and requested;
 - publish a patched release when a fix is ready;
 - document relevant mitigation steps when possible.
 
-This is a small open-source project, so response times may vary. Please act in good faith and avoid public disclosure before maintainers have had a reasonable opportunity to investigate and fix the issue.
-
 ## Coordinated disclosure
 
-Please do not publicly disclose a vulnerability until:
+Please do not publicly disclose a vulnerability until disclosure has been coordinated with the
+maintainers. The default coordinated disclosure window is up to 90 calendar days after the private
+report, unless the maintainers and reporter agree on a different timeline because of active
+exploitation, public prior disclosure, fix complexity, or user risk.
+
+Before public disclosure, the expected path is:
 
 - the maintainers have confirmed the issue;
-- a fix or mitigation is available;
-- users have had a reasonable opportunity to update;
-- or disclosure has otherwise been coordinated with the maintainers.
+- a fix or mitigation is available, or a no-fix rationale has been shared privately;
+- users have had a reasonable opportunity to update when a release is needed;
+- public advisory text avoids unnecessary exploit details before users can update.
+
+Confirmed vulnerabilities that affect published packages should normally use a GitHub Security
+Advisory. Maintainers may request a CVE through GHSA when the issue is in scope. If a report is not
+treated as a vulnerability, maintainers should explain the reason privately.
 
 ## Security of dependencies and releases
 

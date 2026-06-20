@@ -14,6 +14,8 @@ specification; the files here describe how to integrate the library safely.
   `LineIndex`, warnings/errors, and the string input caveat.
 - [Parser integration](parser-integration.md) - the contract for `@relicmem/md-parser` without
   internal imports.
+- [Encoding data provenance](encoding-data-provenance.md) - source URLs, audit date, and review
+  rules for embedded labels and mapping tables.
 - [Release notes v1 candidate](release-notes-v1.md) - compatibility, public API, dependency
   footprint, and known limitations before v1 delivery.
 - [Release automation](release-automation.md) - GitHub workflow, npm scripts, publish gate,

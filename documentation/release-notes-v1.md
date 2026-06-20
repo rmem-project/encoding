@@ -6,7 +6,7 @@ the separate task `ENC-046`.
 
 ## Compatibility
 
-- Runtime: Node.js `>=20.19`.
+- Runtime: Node.js `>=24.17`.
 - Package format: ESM package (`"type": "module"`) with root entrypoint `./dist/index.js`.
 - TypeScript declarations: `./dist/index.d.ts`.
 - Public package export: only package root `"."`; internal detector/decoder/source modules are not
@@ -53,6 +53,16 @@ with explicit `sourceMap: "none"` or where registry policy allows loss of exact 
 optional `iconv-lite` adapter remains an injected zero-dependency adapter and does not add a
 package dependency.
 
+## Package Contents
+
+The npm package contains the runtime build, package metadata, `README.md`, `LICENSE`, and `NOTICE`.
+`NOTICE` is intentionally packaged because the runtime includes encoding labels and compact mapping
+data with third-party provenance requirements.
+
+Repository governance and long-form documentation stay out of the npm tarball:
+`CONTRIBUTING.md`, `SECURITY.md`, `TRADEMARKS.md`, `documentation/*`, `docs/*`, source, tests,
+fixtures, and release scripts are repository-only.
+
 ## Known limitations
 
 - The library is not a Markdown parser and does not normalize Markdown, line endings, or Unicode
@@ -74,6 +84,7 @@ checks:
 
 - whitelisted runtime exports from the package root;
 - package `files`, `main`, `types`, and `exports`;
+- required package notices and prohibited repository-only files;
 - absence of runtime and optional dependencies.
 
 Before release delivery, these commands should pass:

@@ -12,6 +12,8 @@ const SEMVER_PATTERN =
 const NPM_TAG_PATTERN = /^[a-z][a-z0-9._-]{0,63}$/;
 
 const REQUIRED_PACKAGE_PATHS = Object.freeze([
+  "LICENSE",
+  "NOTICE",
   "README.md",
   "dist/index.d.ts",
   "dist/index.js",
@@ -37,6 +39,9 @@ const PROHIBITED_PACKAGE_FILES = Object.freeze([
   ".prettierignore",
   ".prettierrc.json",
   "AGENTS.md",
+  "CONTRIBUTING.md",
+  "SECURITY.md",
+  "TRADEMARKS.md",
   "eslint.config.js",
   "package-lock.json",
   "tsconfig.build.json",
@@ -166,7 +171,7 @@ export function validatePackagePreview(metadata, packument) {
 }
 
 export async function runNpm(args, options = {}) {
-  return runCommand(npmCommand(), args, {
+  return runCommand(npmCommand(), npmCommandArgs(args), {
     ...options,
     env: withLocalNpmCache(options.env ?? process.env),
   });
@@ -179,7 +184,7 @@ export async function runCommand(command, args, options = {}) {
     const child = spawn(command, args, {
       cwd: options.cwd ?? PACKAGE_ROOT,
       env: options.env ?? process.env,
-      shell: options.shell ?? needsWindowsCommandShell(command),
+      shell: options.shell ?? false,
       stdio: stdio === "inherit" ? "inherit" : ["ignore", "pipe", "pipe"],
       windowsHide: true,
     });
@@ -240,11 +245,11 @@ function normalizePackagePath(packagePath) {
 }
 
 function npmCommand() {
-  return process.platform === "win32" ? "npm.cmd" : "npm";
+  return process.platform === "win32" ? (process.env.ComSpec ?? "cmd.exe") : "npm";
 }
 
-function needsWindowsCommandShell(command) {
-  return process.platform === "win32" && /\.(?:bat|cmd)$/i.test(command);
+function npmCommandArgs(args) {
+  return process.platform === "win32" ? ["/d", "/s", "/c", "npm.cmd", ...args] : args;
 }
 
 function withLocalNpmCache(env) {

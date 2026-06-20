@@ -43,12 +43,22 @@ Typical workflow:
 
 ```bash
 npm install
-npm test
-npm run build
-npm run lint
+npm run check
 ```
 
-If the repository uses another package manager or workspace layout, follow the scripts defined in `package.json`.
+`npm run check` is the default local quality gate. It runs type checking, linting, format checking,
+tests, and the production build.
+
+For package metadata, release automation, NOTICE, or distribution-content changes, also run:
+
+```bash
+npm run release:preview
+```
+
+Before a release commit is accepted, `npm run release:check` should pass.
+
+If the repository uses another package manager or workspace layout in the future, follow the scripts
+defined in `package.json`.
 
 ## Code style
 
@@ -132,11 +142,17 @@ Unless you explicitly state otherwise, any contribution intentionally submitted 
 
 By contributing, you confirm that you have the right to submit your contribution and that it can be licensed under the Apache License, Version 2.0.
 
-## Developer Certificate of Origin
+## Sign-offs and provenance
 
-By submitting a contribution, you certify that you wrote the contribution yourself or otherwise have the right to submit it to this project under its license.
+By submitting a contribution, you certify that you wrote the contribution yourself or otherwise have
+the right to submit it to this project under its license.
 
-If requested by maintainers, commits may need to include a sign-off line:
+This repository does not currently require Developer Certificate of Origin sign-offs and does not
+enforce DCO checks in CI. Do not treat a `Signed-off-by` line as a normal pull request requirement.
+
+Maintainers may still ask for an explicit sign-off or additional provenance notes for changes that
+touch licensing, generated data, vendored materials, or third-party notices. If requested, commits
+can include a sign-off line:
 
 ```text
 Signed-off-by: Your Name <your.email@example.com>
@@ -159,3 +175,8 @@ Please follow the instructions in `SECURITY.md`.
 Contributors are expected to communicate respectfully and constructively.
 
 Technical disagreement is welcome. Personal attacks, harassment, spam, or intentionally disruptive behavior are not.
+
+This repository currently has a minimal conduct rule, not a separate incident-reporting process. For
+public repository interactions, maintainers may moderate issues, pull requests, discussions, and
+comments through the available platform tools. Security-sensitive information must follow
+`SECURITY.md`, not public conduct or issue threads.

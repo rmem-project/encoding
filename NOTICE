@@ -8,31 +8,103 @@ Licensed under the Apache License, Version 2.0.
 
 The contents of this NOTICE file are for informational purposes only and do not modify the License.
 
-The names “RelicMEM” and “@relicmem/encoding”, the RelicMEM project identity, and any associated logos or visual marks are trademarks or project marks of their respective owners. Use of these names or marks does not imply endorsement by the RelicMEM project unless explicitly stated.
+The names "RelicMEM" and "@relicmem/encoding", the RelicMEM project identity, and any associated
+logos or visual marks are project marks controlled by the RelicMEM project maintainers or other
+respective owners. Use of these names or marks does not imply endorsement by the RelicMEM project
+unless explicitly stated.
 
-Third-party notices:
+Third-party notices and provenance summary:
 
-WHATWG Encoding Standard
+WHATWG Encoding Standard and WHATWG encoding data
 
-This package includes behavior and compact data derived from the WHATWG Encoding Standard for encoding labels, web-compatible label remapping, TextDecoder compatibility expectations, and legacy single-byte encoding indexes used by the native decoder tables.
+This package includes behavior and compact source data derived from the WHATWG Encoding Standard and
+the WHATWG encoding repository for encoding labels, web-compatible label remapping, TextDecoder
+compatibility expectations, and legacy single-byte encoding indexes used by the native decoder
+tables.
 
-Covered materials in this package include support data or behavior for `windows-1251`, `windows-1252`, `iso-8859-5`, `koi8-r`, `IBM866`/`cp866`, and the web-compatible remapping of labels such as `iso-8859-1`, `latin1`, `us-ascii`, and related aliases to `windows-1252`.
+Covered materials in this package include support data or behavior for `windows-1251`,
+`windows-1252`, `iso-8859-5`, `koi8-r`, `IBM866`/`cp866`, and the web-compatible remapping of
+labels such as `iso-8859-1`, `latin1`, `us-ascii`, and related aliases to `windows-1252`.
 
 Source: https://encoding.spec.whatwg.org/
 Repository data: https://github.com/whatwg/encoding
+Repository inputs used for table verification: `encodings.json`, `index-windows-1251.txt`,
+`index-windows-1252.txt`, `index-iso-8859-5.txt`, `index-koi8-r.txt`, and `index-ibm866.txt`.
+Provenance audit date for the current embedded tables: 2026-06-20.
 Copyright: WHATWG (Apple, Google, Mozilla, Microsoft).
-License: Creative Commons Attribution 4.0 International License for the standard text; BSD 3-Clause License for portions incorporated into source code.
+License: Creative Commons Attribution 4.0 International License for the standard text; BSD
+3-Clause License for portions incorporated into source code.
+
+BSD 3-Clause notice for WHATWG portions incorporated into source code:
+
+Copyright WHATWG (Apple, Google, Mozilla, Microsoft).
+
+Redistribution and use in source and binary forms, with or without modification, are permitted
+provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions
+   and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of
+   conditions and the following disclaimer in the documentation and/or other materials provided with
+   the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse
+   or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Unicode Standard and Unicode data
 
-This package includes behavior and compact data derived from Unicode materials for UTF-8 and UTF-16 handling, scalar value and surrogate rules, BOM-related behavior, Unicode code point assignments used in encoding maps, and replacement character semantics.
+This package includes behavior and compact data derived from Unicode materials for UTF-8 and UTF-16
+handling, scalar value and surrogate rules, BOM-related behavior, Unicode code point assignments used
+in encoding maps, and replacement character semantics.
 
 Source: https://www.unicode.org/
 License: Unicode License v3.
-Copyright: 1991-2026 Unicode, Inc.
+Provenance audit date for Unicode-derived behavior and code point usage: 2026-06-20.
+
+UNICODE LICENSE V3 COPYRIGHT AND PERMISSION NOTICE
+
+Copyright (c) 1991-2026 Unicode, Inc.
+
+NOTICE TO USER: Carefully read the following legal agreement. BY DOWNLOADING, INSTALLING, COPYING OR
+OTHERWISE USING DATA FILES, AND/OR SOFTWARE, YOU UNEQUIVOCALLY ACCEPT, AND AGREE TO BE BOUND BY,
+ALL OF THE TERMS AND CONDITIONS OF THIS AGREEMENT. IF YOU DO NOT AGREE, DO NOT DOWNLOAD, INSTALL,
+COPY, DISTRIBUTE OR USE THE DATA FILES OR SOFTWARE.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of data files and any
+associated documentation (the "Data Files") or software and any associated documentation (the
+"Software") to deal in the Data Files or Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, and/or sell copies of the Data Files or
+Software, and to permit persons to whom the Data Files or Software are furnished to do so, provided
+that either (a) this copyright and permission notice appear with all copies of the Data Files or
+Software, or (b) this copyright and permission notice appear in associated Documentation.
+
+THE DATA FILES AND SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT OF THIRD PARTY RIGHTS.
+
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS NOTICE BE LIABLE FOR ANY CLAIM,
+OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL DAMAGES, OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
+USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
+OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THE DATA FILES OR SOFTWARE.
+
+Except as contained in this notice, the name of a copyright holder shall not be used in advertising
+or otherwise to promote the sale, use or other dealings in these Data Files or Software without prior
+written authorization of the copyright holder.
 
 IANA Character Sets registry
 
-This package uses charset names and aliases from the IANA Character Sets registry as compatibility references for accepted encoding labels.
+This package uses charset names and aliases from the IANA Character Sets registry as compatibility
+references for accepted encoding labels. The registry is used as a reference only: this package does
+not copy or derive runtime table data, registry rows, registry contact data, or registry text from
+the IANA registry.
 
 Source: https://www.iana.org/assignments/character-sets/character-sets.xhtml
+Registry last updated by IANA at the time of this audit: 2024-06-06.

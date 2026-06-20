@@ -40,6 +40,7 @@ UTF-8 bytes for it, so it is not source-perfect.
 - [Encoding profiles](documentation/profiles.md)
 - [Source mapping and diagnostics](documentation/source-mapping-and-diagnostics.md)
 - [Parser integration](documentation/parser-integration.md)
+- [Encoding data provenance](documentation/encoding-data-provenance.md)
 - [Release notes v1 candidate](documentation/release-notes-v1.md)
 - [Release automation](documentation/release-automation.md)
 - [Contributor notes](documentation/contributors.md)

@@ -70,11 +70,11 @@ describe("package release readiness", () => {
     }
   });
 
-  it("publishes only the built package entrypoint and type declarations", async () => {
+  it("publishes the built package entrypoint, type declarations, and packaged notice", async () => {
     const metadata = await readPackageMetadata();
 
     expect(metadata.name).toBe("@relicmem/encoding");
-    expect(metadata.files).toEqual(["dist"]);
+    expect(metadata.files).toEqual(["dist", "NOTICE"]);
     expect(metadata.main).toBe("./dist/index.js");
     expect(metadata.types).toBe("./dist/index.d.ts");
     expect(metadata.exports).toEqual({

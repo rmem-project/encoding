@@ -126,8 +126,9 @@ range mapping through `DecodedDocument.offsetMap`.
 ## Diagnostics
 
 Runtime diagnostic messages must be English. Public documentation in `README.md` and
-`documentation/*` is English. Internal project memory under `docs/*` and code comments are
-Ukrainian.
+`documentation/*` is English. Public governance documents (`CONTRIBUTING.md`, `SECURITY.md`,
+`TRADEMARKS.md`, and `NOTICE`) are also English. Internal project memory under `docs/*` and code
+comments are Ukrainian.
 
 Warnings/errors must not be converted to plain strings in public integration. Preserve `code`,
 `byteRange`, `textRange`, `details`, and `warnings`.
@@ -137,3 +138,7 @@ Warnings/errors must not be converted to plain strings in public integration. Pr
 Public examples should be covered by `tests/public-docs-examples.test.ts`. After changing
 examples, run `npm run typecheck` and relevant tests; before finishing the task, run
 `npm run check`.
+
+For package metadata, release automation, NOTICE, or distribution-content changes, also run
+`npm run release:preview`. The npm tarball should contain runtime package files plus `README.md`,
+`LICENSE`, and `NOTICE`; repository governance docs and long-form documentation are repository-only.
