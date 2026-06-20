@@ -1,6 +1,6 @@
-name: Release
+name: NPM Release
 
-on:
+"on":
   workflow_dispatch:
     inputs:
       mode:
@@ -34,6 +34,7 @@ env:
   RELEASE_VERSION: "${{ inputs.version }}"
   NPM_TAG: "${{ inputs.npm_tag }}"
   RELEASE_DEFAULT_BRANCH: "${{ github.event.repository.default_branch }}"
+  PACKAGE_ARTIFACT_DIR: "release-artifacts"
 
 jobs:
   package-preview:
@@ -49,7 +50,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
           registry-url: "https://registry.npmjs.org"
 
@@ -62,11 +63,16 @@ jobs:
       - name: Build verified package tarball
         run: npm run release:pack
 
+      - name: Verify package tarball exists
+        run: |
+          ls -la "$PACKAGE_ARTIFACT_DIR"
+          test -n "$(find "$PACKAGE_ARTIFACT_DIR" -maxdepth 1 -name '*.tgz' -print -quit)"
+
       - name: Upload package preview artifact
         uses: actions/upload-artifact@v4
         with:
           name: "npm-package-${{ inputs.version }}"
-          path: ".release/*.tgz"
+          path: "release-artifacts/*.tgz"
           if-no-files-found: "error"
           retention-days: 14
 
@@ -87,14 +93,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           registry-url: "https://registry.npmjs.org"
 
       - name: Download package preview artifact
         uses: actions/download-artifact@v4
         with:
           name: "npm-package-${{ inputs.version }}"
-          path: ".release"
+          path: "release-artifacts"
 
       - name: Check publish target availability
         env:
@@ -126,7 +132,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG_NAME: "v${{ inputs.version }}"
         run: |
-          gh release create "$TAG_NAME" .release/*.tgz \
+          gh release create "$TAG_NAME" release-artifacts/*.tgz \
             --target "$GITHUB_SHA" \
             --title "@rmem/encoding $RELEASE_VERSION" \
             --notes-file documentation/release-notes-v1.md
