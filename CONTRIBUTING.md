@@ -1,14 +1,14 @@
-# Contributing to @rmem/encoding
+# Contributing to @relicmem/encoding
 
-Thank you for your interest in contributing to `@rmem/encoding`.
+Thank you for your interest in contributing to `@relicmem/encoding`.
 
-`@rmem/encoding` is part of the rmem project. The goal of this package is to provide reliable, well-tested, and predictable encoding-related functionality for the rmem ecosystem and for general TypeScript/JavaScript usage.
+`@relicmem/encoding` is part of the RelicMEM project. The goal of this package is to provide reliable, well-tested, and predictable encoding-related functionality for the RelicMEM ecosystem and for general TypeScript/JavaScript usage.
 
 This project welcomes bug reports, documentation improvements, tests, compatibility fixes, and carefully scoped feature proposals.
 
 ## Project status
 
-`@rmem/encoding` is in active development. Public APIs may still evolve before a stable `1.0.0` release.
+`@relicmem/encoding` is in active development. Public APIs may still evolve before a stable `1.0.0` release.
 
 Please keep contributions focused, explicit, and easy to review. Large rewrites, speculative abstractions, or broad architectural changes should start with an issue or discussion first.
 

@@ -1,6 +1,6 @@
 # Trademark Policy
 
-This trademark policy applies to the names, marks, and project identity associated with the rmem project and the `@rmem/encoding` package.
+This trademark policy applies to the names, marks, and project identity associated with the RelicMEM project and the `@relicmem/encoding` package.
 
 ## Project marks
 
